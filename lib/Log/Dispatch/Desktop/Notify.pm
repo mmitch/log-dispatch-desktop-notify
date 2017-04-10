@@ -80,21 +80,31 @@ use Class::Tiny;
 sub new {
     my ($class, %params) = @_;
 
-    my $self = bless {}, $class;
+    my $self = bless {
+	_timeout => -1,
+    }, $class;
+
     $self->_basic_init(%params);
-    $self->_init();
+    $self->_init(%params);
+
     return $self;
 };
 
 sub log_message {
     my ($self, %params) = @_;
 
-    my $notification = $self->{_notify}->create( summary => $params{message}, timeout => -1 );
+    my $notification = $self->{_notify}->create(
+	summary => $params{message},
+	timeout => $self->{_timeout}
+	);
+
     $notification->show();
 };
 
 sub _init {
-    my ($self) = @_;
+    my ($self, %params) = @_;
+
+    $self->{_timeout} = $params{timeout} if defined $params{timeout};
 
     $self->{_notify} = Desktop::Notify->new;
 };
