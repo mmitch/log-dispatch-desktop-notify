@@ -5,7 +5,7 @@ our $last_notification;
 our $notification_mock = qclass(
     -implement => 'Desktop::Notify::Notification',
     -with_new => 1,
-    -attributes => [ qw( summary ) ],
+    -attributes => [ qw( summary timeout ) ],
     show => sub {
 	my $self = shift;
 	$last_notification = $self;

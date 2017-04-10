@@ -89,7 +89,7 @@ sub new {
 sub log_message {
     my ($self, %params) = @_;
 
-    my $notification = $self->{_notify}->create(summary => $params{message});
+    my $notification = $self->{_notify}->create( summary => $params{message}, timeout => -1 );
     $notification->show();
 };
 

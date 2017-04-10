@@ -1,5 +1,5 @@
 #!perl
-use Test::More tests => 2;
+use Test::More tests => 3;
 
 BEGIN { require 't/mocks.pl' }
 
@@ -16,4 +16,15 @@ subtest 'simple notification' => sub {
     is( $notify_mock->metrics->{create}, 1, 'create notification' );
     is( $notification_mock->metrics->{show}, 1, 'show notification' );
     is( $last_notification->summary, 'TEST', 'notification message' );
+};
+
+subtest 'default timeout' => sub {
+    # given
+    my $obj = Log::Dispatch::Desktop::Notify->new( min_level => 'warning' );
+
+    # when
+    $obj->log( level => 'warning', message => 'TEST');
+
+    # then
+    is( $last_notification->timeout, -1, 'timeout' );
 };
