@@ -23,7 +23,7 @@ subtest 'default name' => sub {
 
 subtest 'given name' => sub {
     # given
-    my $obj = Log::Dispatch::Desktop::Notify->new( min_level => 'warning', name => 'TEST_APP' );
+    my $obj = Log::Dispatch::Desktop::Notify->new( min_level => 'warning', app_name => 'TEST_APP' );
 
     # when
     $obj->log( level => 'warning', message => 'TEST');
