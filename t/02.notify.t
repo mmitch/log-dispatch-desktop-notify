@@ -1,5 +1,5 @@
 #!perl
-use Test::More tests => 3;
+use Test::More tests => 4;
 
 BEGIN { require 't/mocks.pl' }
 
@@ -19,4 +19,15 @@ subtest 'default name' => sub {
 
     # then
     is( $obj->{_notify}->app_name, $0, 'name' );
+};
+
+subtest 'given name' => sub {
+    # given
+    my $obj = Log::Dispatch::Desktop::Notify->new( min_level => 'warning', name => 'TEST_APP' );
+
+    # when
+    $obj->log( level => 'warning', message => 'TEST');
+
+    # then
+    is( $obj->{_notify}->app_name, 'TEST_APP', 'name' );
 };
