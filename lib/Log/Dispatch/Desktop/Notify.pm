@@ -81,6 +81,7 @@ sub new {
 
     my $self = bless {
 	_timeout => -1,
+	_name    => $0,
     }, $class;
 
     $self->_basic_init(%params);
@@ -94,7 +95,7 @@ sub log_message {
 
     my $notification = $self->{_notify}->create(
 	summary => $params{message},
-	timeout => $self->{_timeout}
+	timeout => $self->{_timeout},
 	);
 
     $notification->show();
@@ -103,9 +104,10 @@ sub log_message {
 sub _init {
     my ($self, %params) = @_;
 
+    $self->{_name}    = $params{name}    if defined $params{name};
     $self->{_timeout} = $params{timeout} if defined $params{timeout};
 
-    $self->{_notify} = Desktop::Notify->new;
+    $self->{_notify} = Desktop::Notify->new( app_name => $self->{_name} );
 };
 
 1;
