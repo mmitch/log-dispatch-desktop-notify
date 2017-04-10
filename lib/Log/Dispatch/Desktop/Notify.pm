@@ -72,4 +72,6 @@ L<Desktop::Notify>
 
 =cut
 
+use Class::Tiny;
+
 1;
