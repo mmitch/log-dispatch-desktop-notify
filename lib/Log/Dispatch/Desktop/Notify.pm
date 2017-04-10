@@ -86,6 +86,13 @@ sub new {
     return $self;
 };
 
+sub log_message {
+    my ($self, %params) = @_;
+
+    my $notification = $self->{_notify}->create(summary => $params{message});
+    $notification->show();
+};
+
 sub _init {
     my ($self) = @_;
 
