@@ -72,6 +72,16 @@ L<Desktop::Notify>
 
 =cut
 
+use parent 'Log::Dispatch::Output';
+
 use Class::Tiny;
+
+sub new {
+    my ($class, %params) = @_;
+
+    my $self = bless {}, $class;
+    $self->_basic_init(%params);
+    return $self;
+};
 
 1;
