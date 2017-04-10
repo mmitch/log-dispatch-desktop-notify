@@ -1,6 +1,8 @@
 #!perl
 use Test::More tests => 3;
 
+use Test::Mock::Wrapper qw( Desktop::Notify );
+
 BEGIN { use_ok( 'Log::Dispatch::Desktop::Notify' ) }
 
 subtest 'instance' => sub {
