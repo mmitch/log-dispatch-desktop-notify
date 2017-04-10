@@ -1,7 +1,7 @@
 #!perl
 use Test::More tests => 3;
 
-use Test::Mock::Wrapper qw( Desktop::Notify );
+BEGIN { require 't/mocks.pl' }
 
 BEGIN { use_ok( 'Log::Dispatch::Desktop::Notify' ) }
 
