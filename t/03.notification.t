@@ -1,5 +1,5 @@
 #!perl
-use Test::More tests => 3;
+use Test::More tests => 4;
 
 BEGIN { require 't/mocks.pl' }
 
@@ -27,4 +27,15 @@ subtest 'default timeout' => sub {
 
     # then
     is( $last_notification->timeout, -1, 'timeout' );
+};
+
+subtest 'given timeout' => sub {
+    # given
+    my $obj = Log::Dispatch::Desktop::Notify->new( min_level => 'warning', timeout => 5000 );
+
+    # when
+    $obj->log( level => 'warning', message => 'TEST');
+
+    # then
+    is( $last_notification->timeout, 5000, 'timeout' );
 };
