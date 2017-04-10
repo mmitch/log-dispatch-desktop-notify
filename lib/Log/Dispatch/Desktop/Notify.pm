@@ -75,7 +75,6 @@ L<Desktop::Notify>
 use Desktop::Notify;
 
 use parent 'Log::Dispatch::Output';
-use Class::Tiny;
 
 sub new {
     my ($class, %params) = @_;
