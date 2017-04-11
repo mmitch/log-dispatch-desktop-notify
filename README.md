@@ -9,18 +9,16 @@ Log::Dispatch::Desktop::Notify - Log::Dispatch notification backend using Deskto
 what
 ----
 
-
-
-why
----
-
-
+Log::Dispatch::Desktop::Notify a backend for
+[Log::Dispatch](https://metacpan.org/pod/Log::Dispatch) that displays
+messages via the Desktop Notification Framework (think `libnotify`)
+using [Desktop::Notify](https://metacpan.org/pod/Desktop::Notify).
 
 installation
 ------------
 
-The latest release of Log::Dispatch::Desktop::Notify can be installed directly from CPAN,
-eg. via
+The latest release of Log::Dispatch::Desktop::Notify can be installed
+directly from CPAN, eg. via
 
     $ cpan -i Log::Dispatch::Desktop::Notify
 
@@ -32,9 +30,10 @@ or
 building
 --------
 
-To build and install the current development version of Log::Dispatch::Desktop::Notify
-module, you need to have Dist::Zilla installed.  Run the ``dzil``
-command - if it is available, Dist::Zilla should be installed.
+To build and install the current development version of
+Log::Dispatch::Desktop::Notify, you need to have Dist::Zilla
+installed.  Run the ``dzil`` command - if it is available, Dist::Zilla
+should be installed.
 
 To install or upgrade Dist::Zilla use
 
@@ -64,13 +63,11 @@ Afterwards, try the installation again with
 where to get it
 ---------------
 
-Log::Dispatch::Desktop::Notify source is hosted at https://github.com/mmitch/log-dispatch-desktop-notify  
+Log::Dispatch::Desktop::Notify source is hosted at
+https://github.com/mmitch/log-dispatch-desktop-notify  
 The latest released version is available on CPAN at
 https://metacpan.org/release/Log-Dispatch-Desktop-Notify
 
-
-more information
-----------------
 
 copyright
 ---------
