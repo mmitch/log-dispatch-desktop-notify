@@ -4,18 +4,102 @@ use warnings;
 # Licensed under GNU GPL v2 or later.
 
 package Log::Dispatch::Desktop::Notify;
+
 # ABSTRACT: Log::Dispatch notification backend using Desktop::Notify
 
+use Desktop::Notify;
+
+use parent 'Log::Dispatch::Output';
 
 =head1 SYNOPSIS
 
+    use Log::Dispatch;
     use Log::Dispatch::Desktop::Notify;
+
+    my $log = Log::Dispatch->new();
+
+    $log->add( Log::Dispatch::Desktop::Notify->new(
+                 min_level => 'warning'
+               ));
+
+    $log->log( level => 'warning', message => 'a problem!' );
 
 =head1 DESCRIPTION
 
-=head1 INTERFACE
+Log::Dispatch::Desktop::Notify is a backend for L<Log::Dispatch> that
+displays messages via the Desktop Notification Framework (think
+C<libnotify>) using L<Desktop::Notify>.
 
-=head1 CONFIGURATION AND ENVIRONMENT
+=head1 METHODS
+
+=head2 new
+
+Creates a new L<Log::Dispatch::Desktop::Notify> object.  Expects named
+parameters as a hash.  In addition to the usual parameters of
+L<Log::Dispatch::Output> these parameters are also supported:
+
+=over
+
+=item timeout
+
+Default value: C<-1>
+
+Sets the message timeout in milliseconds.  C<0> disables the timeout,
+the message has to be closed manually.  C<-1> uses the default timeout
+of the notification server.
+
+=item app_name
+
+Default value: C<$0> (script name)
+
+Sets the application name for the message display.
+
+=back
+
+=cut
+
+sub new {
+    my ($class, %params) = @_;
+
+    my $self = bless {
+	_timeout  => -1,
+	_app_name => $0,
+    }, $class;
+
+    $self->_basic_init(%params);
+    $self->_init(%params);
+
+    return $self;
+};
+
+sub _init {
+    my ($self, %params) = @_;
+
+    $self->{_app_name} = $params{app_name} if defined $params{app_name};
+    $self->{_timeout}  = $params{timeout}  if defined $params{timeout};
+
+    $self->{_notify} = Desktop::Notify->new( app_name => $self->{_app_name} );
+};
+
+=head2 log_message
+
+This message is called internally by C<Log::Dispatch::log()> to
+display a message.  Expects named parameters in a hash.  Currently,
+only the usual L<Log::Dispatch::Output> parameters C<level> and
+C<message> are supported.
+
+=cut
+
+sub log_message {
+    my ($self, %params) = @_;
+
+    my $notification = $self->{_notify}->create(
+	summary => $params{message},
+	timeout => $self->{_timeout},
+	);
+
+    $notification->show();
+};
 
 =head1 BUGS AND LIMITATIONS
 
@@ -71,43 +155,5 @@ L<Desktop::Notify>
 =back
 
 =cut
-
-use Desktop::Notify;
-
-use parent 'Log::Dispatch::Output';
-
-sub new {
-    my ($class, %params) = @_;
-
-    my $self = bless {
-	_timeout  => -1,
-	_app_name => $0,
-    }, $class;
-
-    $self->_basic_init(%params);
-    $self->_init(%params);
-
-    return $self;
-};
-
-sub log_message {
-    my ($self, %params) = @_;
-
-    my $notification = $self->{_notify}->create(
-	summary => $params{message},
-	timeout => $self->{_timeout},
-	);
-
-    $notification->show();
-};
-
-sub _init {
-    my ($self, %params) = @_;
-
-    $self->{_app_name} = $params{app_name} if defined $params{app_name};
-    $self->{_timeout}  = $params{timeout}  if defined $params{timeout};
-
-    $self->{_notify} = Desktop::Notify->new( app_name => $self->{_app_name} );
-};
 
 1;
