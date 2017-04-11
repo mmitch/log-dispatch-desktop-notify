@@ -14,6 +14,24 @@ Log::Dispatch::Desktop::Notify a backend for
 messages via the Desktop Notification Framework (think `libnotify`)
 using [Desktop::Notify](https://metacpan.org/pod/Desktop::Notify).
 
+
+example
+-------
+
+```perl
+use Log::Dispatch;
+use Log::Dispatch::Desktop::Notify;
+
+my $log = Log::Dispatch->new();
+
+$log->add( Log::Dispatch::Desktop::Notify->new(
+             min_level => 'warning'
+           ));
+
+$log->log( level => 'warning', message => 'a problem!' );
+```
+
+
 installation
 ------------
 
