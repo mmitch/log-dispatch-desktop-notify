@@ -91,7 +91,7 @@ sub _init {
     $self->{_notify} = Desktop::Notify->new( app_name => $self->{_app_name} );
 };
 
-sub _desktop_notify_unavailable() {
+sub _desktop_notify_unavailable {
     return try {
 	Desktop::Notify->new();
 	0;
