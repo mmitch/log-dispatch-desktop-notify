@@ -1,8 +1,9 @@
 Revision history for perl distribution Log::Dispatch::Desktop::Notify
 
-v0.0.2 unreleased
+v0.0.2 2017-04-12
 
- -
+ - Return a Log::Dispatch::Null instance if Desktop::Notify is unavailable
+   (eg. with no $DISPLAY set or no Dbus available)
 
 v0.0.1 2017-04-11
 
