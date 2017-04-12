@@ -8,6 +8,8 @@ package Log::Dispatch::Desktop::Notify;
 # ABSTRACT: Log::Dispatch notification backend using Desktop::Notify
 
 use Desktop::Notify;
+use Log::Dispatch::Null;
+use Try::Tiny;
 
 use parent 'Log::Dispatch::Output';
 
@@ -56,10 +58,18 @@ Sets the application name for the message display.
 
 =back
 
+Note: If L<Desktop::Notify> can't establish a Dbus session (no
+messages can be sent), a L<Log::Dispatch::Null> object is returned
+instead.
+
 =cut
 
 sub new {
     my ($class, %params) = @_;
+
+    if (_desktop_notify_unavailable()) {
+	return Log::Dispatch::Null->new(%params);
+    };
 
     my $self = bless {
 	_timeout  => -1,
@@ -80,6 +90,15 @@ sub _init {
 
     $self->{_notify} = Desktop::Notify->new( app_name => $self->{_app_name} );
 };
+
+sub _desktop_notify_unavailable() {
+    return try {
+	Desktop::Notify->new();
+	0;
+    } catch {
+	1;
+    }
+}
 
 =head2 log_message
 
