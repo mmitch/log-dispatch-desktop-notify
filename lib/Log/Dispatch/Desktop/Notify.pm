@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-# Copyright (C) 2017  Christian Garbs <mitch@cgarbs.de>
+# Copyright (C) 2017,2018  Christian Garbs <mitch@cgarbs.de>
 # Licensed under GNU GPL v2 or later.
 
 package Log::Dispatch::Desktop::Notify;
@@ -102,7 +102,7 @@ sub _desktop_notify_unavailable {
 
 =head2 log_message
 
-This message is called internally by C<Log::Dispatch::log()> to
+This method is called internally by C<Log::Dispatch::log()> to
 display a message.  Expects named parameters in a hash.  Currently,
 only the usual L<Log::Dispatch::Output> parameters C<level> and
 C<message> are supported.
